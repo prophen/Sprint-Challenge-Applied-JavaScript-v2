@@ -21,28 +21,42 @@
 axios
   .get("https://lambda-times-backend.herokuapp.com/articles")
   .then(result => {
-    console.log(result)
-    document.querySelector('.cards-container').append(Card(result.data.articles))
-    // result.data.topics.forEach(topic => {
-    //   const div = document.createElement("div");
-    //   div.classList.add("tab");
-    //   div.textContent = topic;
-    //   document.querySelector(".topics").append(div);
-    // });
+    console.log(result);
+    document
+      .querySelector(".cards-container")
+      .append(Card(result.data.articles));
   })
   .catch(error => {
     // Handles failure:
     console.log("Error", error);
   });
 
-  function Card(articles) {
-    console.log(articles)
+function Card(articles) {
+  console.log(articles);
 
-    // create DOM elements
-    const card = document.createElement('div')
-    const headline = document.createElement('div')
-    const author = document.createElement('div')
-    const imgContainer = document.createElement('div')
-    const img = document.createElement('img')
-    const byline = document.createElement('span')
-  }
+  // create DOM elements
+  const card = document.createElement("div");
+  const headline = document.createElement("div");
+  const author = document.createElement("div");
+  const imgContainer = document.createElement("div");
+  const img = document.createElement("img");
+  const byline = document.createElement("span");
+
+  // add classes
+  card.classList.add('card')
+  headline.classList.add('headline')
+  author.classList.add('author')
+  imgContainer.classList.add('img-container')
+
+  const articlesArray = Object.values(articles)
+  console.log(articlesArray)
+
+  articlesArray.forEach(articles => {
+    articles.forEach(article => {
+     
+      return card
+    }) 
+  })
+
+  
+}
