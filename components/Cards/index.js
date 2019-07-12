@@ -21,19 +21,14 @@
 axios
   .get("https://lambda-times-backend.herokuapp.com/articles")
   .then(result => {
-    console.log(result);
-    document
-      .querySelector(".cards-container")
-      .append(Card(result.data.articles));
+    populateArticles(result.data.articles);
   })
   .catch(error => {
     // Handles failure:
     console.log("Error", error);
   });
 
-function Card(articles) {
-  console.log(articles);
-
+function Card(articleHeadline, authorPhoto, authorName) {
   // create DOM elements
   const card = document.createElement("div");
   const headline = document.createElement("div");
@@ -43,20 +38,35 @@ function Card(articles) {
   const byline = document.createElement("span");
 
   // add classes
-  card.classList.add('card')
-  headline.classList.add('headline')
-  author.classList.add('author')
-  imgContainer.classList.add('img-container')
+  card.classList.add("card");
+  headline.classList.add("headline");
+  author.classList.add("author");
+  imgContainer.classList.add("img-container");
 
-  const articlesArray = Object.values(articles)
-  console.log(articlesArray)
+  // populate article content
+  headline.textContent = articleHeadline;
+  img.src = authorPhoto;
+  byline.textContent = authorName;
+
+  // assemble elements
+  card.append(headline, author);
+  author.append(imgContainer, byline);
+  imgContainer.append(img);
+
+  return card;
+}
+function populateArticles(articlesData) {
+  // convert the object to an array
+  const articlesArray = Object.values(articlesData);
 
   articlesArray.forEach(articles => {
     articles.forEach(article => {
-     
-      return card
-    }) 
-  })
-
-  
+      const card = Card(
+        article.headline,
+        article.authorPhoto,
+        article.authorName
+      );
+      document.querySelector(".cards-container").append(card);
+    });
+  });
 }
